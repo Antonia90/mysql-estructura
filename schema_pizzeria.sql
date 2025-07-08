@@ -58,8 +58,11 @@ CREATE TABLE pedido(
     precio DECIMAL(10,2) UNSIGNED NOT NULL,
     id_cliente INT UNSIGNED NOT NULL,
     id_tienda INT UNSIGNED NOT NULL,
+    id_repartidor INT UNSIGNED,
+    fecha_hora_entrega DATETIME,
     FOREIGN KEY (id_cliente) REFERENCES cliente(id),
-    FOREIGN KEY (id_tienda) REFERENCES tienda(id)
+    FOREIGN KEY (id_tienda) REFERENCES tienda(id),
+    FOREIGN KEY (id_repartidor) REFERENCES empleado(id)
 );
 
 CREATE TABLE pedido_producto (
@@ -69,14 +72,6 @@ CREATE TABLE pedido_producto (
     PRIMARY KEY (id_pedido, id_producto),
     FOREIGN KEY (id_pedido) REFERENCES pedido(id),
     FOREIGN KEY (id_producto) REFERENCES producto(id)
-);
-
-CREATE TABLE reparto_domicilio (
-    id_pedido INT UNSIGNED PRIMARY KEY,
-    id_repartidor INT UNSIGNED NOT NULL,
-    fecha_hora_entrega DATETIME NOT NULL,
-    FOREIGN KEY (id_pedido) REFERENCES pedido(id),
-    FOREIGN KEY (id_repartidor) REFERENCES empleado(id)
 );
 
 
