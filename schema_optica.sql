@@ -37,6 +37,12 @@ CREATE TABLE proveedor (
     NIF VARCHAR(9) UNIQUE NOT NULL
 );
 
+CREATE TABLE marca (
+    nombre VARCHAR(50) PRIMARY KEY,
+    proveedor_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (proveedor_id) REFERENCES proveedor(id)
+);
+
 CREATE TABLE gafa (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     marca VARCHAR(50) NOT NULL,
@@ -47,16 +53,15 @@ CREATE TABLE gafa (
     color_vidrio_izquierdo VARCHAR(20),
     color_vidrio_derecho VARCHAR(20),
     precio FLOAT NOT NULL,
-    proveedor_id INT UNSIGNED,
-    FOREIGN KEY (proveedor_id) REFERENCES proveedor(id)
+    FOREIGN KEY (marca) REFERENCES marca(nombre)
 );
 
 CREATE TABLE venta (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     cliente_id INT UNSIGNED NOT NULL,
     empleado_id INT UNSIGNED NOT NULL,
     gafa_id INT UNSIGNED NOT NULL,
     fecha_venta DATE NOT NULL,
+    PRIMARY KEY (cliente_id, gafa_id, fecha_venta),
     FOREIGN KEY (cliente_id) REFERENCES cliente(id),
     FOREIGN KEY (empleado_id) REFERENCES empleado(id),
     FOREIGN KEY (gafa_id) REFERENCES gafa(id)
